@@ -1,0 +1,231 @@
+<include file="Public:header" />
+
+<style>
+.admin_tab{background:#f8f8f8;overflow:hidden;border:1px #d2d2d2 solid;margin-bottom:8px;}
+.admin_tab li{float:left;height:40px;line-height:40px;border-right:1px #f2f2f2 solid;}
+.admin_tab li:last-child{border:none;}
+.admin_tab li a{display:block;padding:0 20px;color:#333;font-size:12px;cursor:pointer;}
+.admin_tab li a.active{background:white;font-weight:bold;border-top:1px #428bca solid;color:#428bca;}
+.admin_tab_cont{display:none;overflow:hidden;}
+</style>
+<script type="text/javascript">
+$(function(){
+ $(".admin_tab li a").click(function(){
+		  var liindex = $(".admin_tab li a").index(this);
+		  $(this).addClass("active").parent().siblings().find("a").removeClass("active");
+		  $(".admin_tab_cont").eq(liindex).fadeIn(150).siblings(".admin_tab_cont").hide();
+		 });
+		 
+	})
+</script>
+ <script type="text/javascript">
+      function selectall(name) {
+	if($("#check_box").prop('checked')== true) {
+		$("input[name='"+name+"']").each(function() {
+  			$(this).prop('checked',true);
+			
+		});
+	} else {
+		$("input[name='"+name+"']").each(function() {
+  			$(this).removeAttr("checked");
+		});
+	}
+} 
+</script>
+ <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a href="{:U('Index/index')}">首页</a><span class="crumb-step">&gt;</span><span>添加文章</span></div>
+        </div>
+        <div class="result-wrap">
+            <div class="result-content">
+                <form action="{:U('Article/insert')}" method="post" id="form"  enctype="multipart/form-data">
+                 
+                    <ul class="admin_tab">
+                    <li><a class="active">常规选项</a></li>
+                    <li><a>添加组图</a></li>
+                    </ul>
+                    <div class="admin_tab_cont" style="display:block;">
+                     <table class="insert-tab" width="100%">
+                        <tbody>
+                        <tr>
+                            <th width="120">栏目：</th>
+                            <td>{:get_catname($catid)}(ID:{$catid})</td>
+                            <input type="hidden"  name="catids[]" value="{$catid}"  />
+                        </tr>
+                         <tr>
+                            <th width="120">发布到其他栏目：</th>
+                            <td>
+                            <ul>
+                            <foreach name="list" item="vo">
+                            <li style="width:175px; height:30px;line-height:30px; float:left;"> <input type="checkbox"  name="catids[]" value="{$vo.catid}"  /> {$vo.catname}(ID:{$vo.catid})&nbsp; 
+                           </li>
+                            </foreach>
+                            <li style="width:175px; height:30px;line-height:30px;  float:left;"> <input id="check_box" onclick="selectall('catids[]');" type="checkbox"> <b>全选</b></li>
+                            </ul>
+                           
+                           
+                            </td>
+                        </tr>
+                            <tr>
+                                <th>标题：</th>
+                                <td>
+                                    <input class="common-text"  name="title" size="100" datatype="*1-100" nullmsg="请填写标题"  type="text"><span class="Validform_checktip"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>关键词：</th>
+                                <td><input class="common-text" name="keywords" size="50" value="" type="text"></td>
+                            </tr>
+                            <tr>
+                                <th>缩略图：</th>
+                                <td><input id="upload_file"   type="file"></td>
+                            </tr>
+                             <script type="text/javascript">
+					$(function(){
+						
+						$('#upload_file').uploadify({
+							'queueSizeLimit' : 1,
+							'swf'             : '__PUBLIC__/User/uploadify.swf',
+							'uploader'        : '{:U("Public/uploadAttach")}',
+							'fileObjName'     : $('#upload_file').attr('name'),
+							'buttonClass'     : 'upload-case',
+							'width'           : 200,
+							'height'          : 30,
+							'removeTimeout'   : 1,
+							'buttonText'      : '上传附件',
+							'fileTypeExts'    : '*.gif; *.jpg; *.png;',
+							'onUploadSuccess' : function(file, data, response) {
+								var data = $.parseJSON(data);
+								if(data.status ==0){
+									alert('上传出错，请稍后再试');
+									return false;
+								}
+								
+								if(data.status==1){           	
+									var html = '<span id="attachment">'+ '<img style="max-width:300px;padding-top:5px; max-height:100px;" src="'+data.file+'">' ;
+									html += '<a href="javascript:void(0)" onclick="delete_attachment(this);">&nbsp;&nbsp;删除</a>';
+									html += '<input type="hidden" name="thumb" value="'+data.file+'" /></span>';
+									$('#upload_file').after(html);
+								} else {
+									alert('上传出错，请稍后再试');
+									return false;
+								}
+							},
+							'onSelect' : function(file) {
+								var length = $('#attachment').length;
+								if(length > 0){
+									$('#upload_file').uploadify('cancel')
+									$('#upload_file').uploadify('stop');
+									alert('附件只允许上传一个');
+									return false;
+								}
+							}
+						});
+					    
+						 
+						
+						 });
+					    function delete_attachment(e){
+							var $this = $(e);
+							$this.parent('span').remove();
+						}
+				</script>
+                             <tr>
+                                <th>描述：</th>
+                                <td><textarea   name="description" class="common-textarea"   style="resize: none;width: 99%; " rows="5"></textarea></td>
+                            </tr>
+                             <tr>
+                                <th>内容：</th>
+                                <td><script type="text/plain" id="myEditor"  style=" margin-top:5px; width:100%;min-width:600px;height:400px;"></script></td>
+                            </tr>
+                           <script type="text/javascript">      
+						 $(function() {          
+						  var um = UM.getEditor('myEditor', { 
+									
+									 UEDITOR_HOME_URL: "__PUBLIC__/Ueditor/",
+									 imageUrl: "{:U('Public/uploadEditor')}",              
+						             imagePath: "__ROOT__/Uploads/",    
+									 
+								     textarea: 'content' });    
+								}); 
+                            </script>
+                        </tbody></table>
+                    </div>
+                   
+                    <div class="admin_tab_cont">
+                     <table class="insert-tab" width="100%">
+                        <tbody>
+                        
+                            <tr>
+                                <th width="100">组图：</th>
+                                <td><input id="upload_gallery"   type="file"></td>
+                            </tr>
+                            <script type="text/javascript">
+					$(function(){
+						
+						$('#upload_gallery').uploadify({
+							'queueSizeLimit' : 10,
+							'swf'             : '__PUBLIC__/User/uploadify.swf',
+							'uploader'        : '{:U("Public/uploadAttach")}',
+							'fileObjName'     : $('#upload_gallery').attr('name'),
+							'buttonClass'     : 'upload-case',
+							'width'           : 200,
+							'height'          : 30,
+							'removeTimeout'   : 1,
+							'buttonText'      : '上传附件',
+							'fileTypeExts'    : '*.gif; *.jpg; *.png;',
+							'onUploadSuccess' : function(file, data, response) {
+								var data = $.parseJSON(data);
+								if(data.status ==0){
+									alert('上传出错，请稍后再试');
+									return false;
+								}
+								
+								if(data.status==1){           	
+									var html = '<span id="attachment">'+ '<img style="width:180px;padding-bottom:5px;padding-top:5px; height:100px;" src="'+data.file+'">' ;
+									html += '<a href="javascript:void(0)" onclick="delete_attachment(this);">&nbsp;&nbsp;删除&nbsp;&nbsp;</a>';
+									html += '<input type="hidden" name="gallery[]" value="'+data.file+'" /></span>';
+									$('#upload_gallery').after(html);
+								} else {
+									alert('上传出错，请稍后再试');
+									return false;
+								}
+							},
+							'onSelect' : function(file) {
+								var length = $('#attachment').length;
+								if(length > 0&&lengh<11){
+									$('#upload_gallery').uploadify('cancel')
+									$('#upload_gallery').uploadify('stop');
+									alert('附件只允许上传10个');
+									return false;
+								}
+							}
+						});
+					    
+						 });
+					    
+				</script>
+                        </tbody>
+                        </table>
+                    </div>
+                     <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <td colspan="2">
+                                    <input class="btn btn-primary btn6 mr10" name="submit" value="保存后自动关闭" type="submit">
+                                    <input class="btn btn-primary btn6 mr10" name="submit_continue" value="保存并继续发表" type="submit">
+                                    <input class="btn btn6" onclick="history.go(-1)" value="返回" type="button">
+                                </td>
+                            </tr>
+                        </tbody></table>
+                   
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!--/main-->
+</div>
+</body>
+</html>

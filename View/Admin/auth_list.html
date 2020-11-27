@@ -1,0 +1,50 @@
+<include file="Public/commoner"/>
+<block name="body">
+    <ol class="breadcrumb">
+        <li><a href="{:U('Index/index')}">首页</a></li>
+        <li>用户组列表</li>
+    </ol>
+    <div class="content">
+        <div class="Config_nav">
+            <ul>
+                <li><a class="on" href="{:U('Admin/auth_list')}">用户组列表</a></li>
+                <li><a href="{:U('Admin/auth_add')}">用户组添加</a></li>
+            </ul>
+        </div>
+        <div class="List">
+            <div class="table-list">
+                <ul>
+                    <li class="ID">ID</li>
+                    <li class="Name">用户组名称</li>
+                    <li class="Property">描述</li>
+                    <li class="S_Order">添加时间</li>
+                    <li class="Status">状态</li>
+                    <li class="Oper">管理操作</li>
+                </ul>
+            </div>
+            <foreach name="list" item="vo" key="k" >
+                <div class="ProList">
+                    <ul>
+                        <li class="ID">{$vo.id}</li>
+                        <li class="Name">{$vo.title}</li>
+                        <li class="Property" style="text-align: left;">{$vo.info}</li>
+                        <li class="S_Order">{$vo.inputtime|date="Y-m-d",###}</li>
+                        <li class="Status">{$vo[status] == 1?'正常':'<font color=red>锁定</font>'}</li>
+                        <li class="Oper">
+                            <div>
+                                <a href="{:U('Admin/auth_edit',array('id'=>$vo['id']))}">编辑</a>
+                                <span>|</span>
+                                <a href="{:U('Admin/auth_delete',array('id'=>$vo['id']))}">删除</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </foreach>
+            <div class="cl" style="margin-top: 15px;"></div>
+            <div class="Order_submit">
+               <div class="tp_pages">{$page}</div>
+            </div>
+        </div>      
+    	<include file="Public:copyright"/>
+    </div>
+</black>

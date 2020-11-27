@@ -1,0 +1,282 @@
+<?php $sel = 4; ?>
+<include file="Public/commoner" />
+<block name="body">
+<ol class="breadcrumb">
+	<li><a href="{:U('Index/index')}">首页</a></li>
+	<li><a href="{:U('Article/index')}">员工管理</a></li>
+	<li>修改信息</li>
+</ol>
+<div class="content">
+	<div class="Config_nav">
+		<ul>
+			<li><a class="on" href="{:U('Article/index')}">员工管理</a></li>
+			<li><a href="{:U('Article/add')}">添加员工</a></li>
+			<!-- <li><a href="{:U('Articlecomment/index')}">文章评论</a></li> -->
+			<li><a href="{:U('Article/recycle')}">回收站</a></li>
+		</ul>
+	</div>
+	<form action="{:U('Article/update')}" method="post" id="form"
+		enctype="multipart/form-data">
+		<div class="Save">
+			<div id=cpxqcon>
+				<div id="cpxqcontags">
+					<ul id="cpxqtags">
+						<li class="selectTag"><A
+							onClick="selectTag('cpxqtagContent0',this)"
+							href="javascript:void(0)">常规选项</A></li>
+						<!-- <li><A onClick="selectTag('cpxqtagContent1',this)" href="javascript:void(0)">SEO设置</A></li>
+                            <li><A onClick="selectTag('cpxqtagContent2',this)" href="javascript:void(0)">多图设置</A></li> -->
+					</ul>
+				</div>
+				<div id="cpxqtagContent">
+					<div class="cpxqtagContent selectTag" id="cpxqtagContent0"
+						style="display: block;">
+						<input type="hidden" name="id" value="{$detail.id}" />
+						<ul>
+							<li class="Name">员工所属部门</li>
+							<li class="input"><select name="catname">
+									<option value="{$vo.catid}">{$detail.catname}</option>
+									<foreach name="cate_list" item="vo" key="k">
+									    <option value="{$vo.catname}">{:str_repeat("└─",$vo['level'])}{$vo.catname}</option>
+									</foreach>
+							</select></li>
+						</ul>
+						<ul>
+							<li class="Name">工号</li>
+							<li class="input"><input class="common-text input-text"
+								name="id" size="40" datatype="*1-100" value="{$detail.id}"
+								type="text"></li>
+						</ul>
+						<ul>
+							<li class="Name">员工姓名</li>
+							<li class="input"><input class="common-text input-text"
+								name="title" size="40" datatype="*1-100" value="{$detail.title}"
+								type="text"></li>
+						</ul>
+						<ul>
+							<li class="Name">性别</li>
+							<li class="input"><input class="sex" name="sex" size="40"
+								datatype="*1-100" value="1" type="radio" checked="checked" >男 
+								<input class="sex" name="sex" size="40" datatype="*1-100"
+								value="0" type="radio">女</li>
+						</ul>
+						<ul>
+							<li class="Name">手机号</li>
+							<li class="input"><input class="common-text input-text"
+								name="phone" size="40" datatype="*1-100" value="{$detail.phone}"
+								type="text"></li>
+						</ul>
+						<ul>
+							<li class="Name">上衣尺码</li>
+							<li class="input"><input class="common-text input-text"
+								name="sy_size" size="40" datatype="*1-100"
+								value="{$detail.sy_size}" type=></li>
+						</ul>
+						<ul>
+							<li class="Name">裤子尺码</li>
+							<li class="input"><input class="common-text input-text"
+								name="kz_size" size="40" datatype="*1-100"
+								value="{$detail.kz_size}" type="text"></li>
+						</ul>
+						<ul>
+							<li class="Name">鞋号</li>
+							<li class="input"><input class="common-text input-text"
+								name="shoes_size" size="40" datatype="*1-100"
+								value="{$detail.shoes_size}" type="text"></li>
+						</ul>
+						<!-- <ul>
+                                <li class="Name">缩略图</li>
+                                <li class="input">
+                                    <input id="upload_file" type="file">
+                                    <div class="cl" style="margin-top: 5px;"></div>
+                                    <notempty name="detail.thumb"> 
+                                    <div class="Pic"><span><a href="{$detail.thumb}"><img src="{$detail.thumb}" /></a></span></div>
+                                    </notempty>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="Name">来源</li>
+                                <li class="input">
+                                   <input name="source" class="common-text input-text" value="{$detail.source}" size="30" type="text">
+                                </li>
+                            </ul> -->
+						<ul>
+							<li class="Name">入职时间</li>
+							<li class="input"><input name="inputtime"
+								class="common-text input-text time"
+								value="{$detail.inputtime|date=" Y-m-d
+								H:i:s",###}" readonly="readonly" size="30"
+								style="cursor: pointer;" type="text" /></li>
+						</ul>
+						<!-- <ul>
+							<li class="Name">员工简介</li>
+							<li class="input"><textarea name="info"
+									class="common-textarea textarea" cols="30" style="width: 50%;"
+									rows="5" value="{$detail.info}"></textarea></li>
+						</ul> -->
+						<!-- <ul>
+                                <li class="Name">文章简介</li>
+                                <li class="input">
+                                   <textarea name="info" class="common-textarea textarea" cols="30" style="width: 50%;" rows="5">{$detail.info}</textarea>
+                                </li>
+                            </ul> -->
+						<!-- <ul>
+                                <li class="Name">信息内容</li>
+                                <li class="input"><script type="text/plain" id="editor" style="width: 100%;height: 350px;">{$detail.content|new_html_entity_decode}</script></li>
+                            </ul> -->
+					</div>
+					<div class="cpxqtagContent" id="cpxqtagContent1">
+						<ul>
+							<li class="Name">SEO标题</li>
+							<li class="input"><input class="common-text input-text"
+								name="ptitle" value="{$detail.ptitle}" size="50" type="text"></li>
+						</ul>
+						<ul>
+							<li class="Name">SEO关键词</li>
+							<li class="input"><input class="common-text input-text"
+								name="pkeywords" value="{$detail.pkeywords}" size="50"
+								type="text"></li>
+						</ul>
+						<ul>
+							<li class="Name">SEO描述</li>
+							<li class="input"><textarea name="pdescription"
+									class="common-textarea textarea" cols="30" style="width: 50%;"
+									rows="5">{$detail.pdescription}</textarea></li>
+						</ul>
+					</div>
+					<div class="cpxqtagContent" id="cpxqtagContent2">
+						<ul>
+							<li class="Name">组图</li>
+							<li class="input"><input id="upload_gallery" type="file">
+								<foreach name="gallery" item="vo">
+								<div class="cl" style="margin-top: 5px;"></div>
+								<div id="src_{$key+1}" class="Pic">
+									<input type="hidden" name="gallery[]" value="{$vo}" /> <span><img
+										src="{$vo}" /></span> <a href="javascript:;" class="gallery"
+										data-id="{$key+1}">移除</a>
+								</div>
+								</foreach></li>
+						</ul>
+					</div>
+					<div class="cl" style="height: 10px;"></div>
+					<div class="btn">
+						<input class="btn btn-primary btn6 mr10" name="submit" value="修改"
+							style="margin-right: 10px;" type="submit"><input
+							class="btn btn6" onClick="history.go(-1)" value="返回"
+							type="button">
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<include file="Public:copyright" />
+</div>
+</black> <script type="text/javascript">
+$(function(){
+	$('#upload_file').uploadify({
+		'queueSizeLimit'  : 1,
+		'swf'             : '__PUBLIC__/User/uploadify.swf',
+		'uploader'        : "{:U('Public/uploadAttach',array('session_id'=>session_id(),'type'=>'1'))}",
+		'fileObjName'     : $('#upload_file').attr('name'),
+		'buttonClass'     : 'upload-case',
+		'width'           : 150,
+		'height'          : 25,
+		'removeTimeout'   : 1,
+		'buttonText'      : '上传图片',
+		'fileTypeExts'    : '*.gif; *.jpg; *.png',
+		'onUploadSuccess' : function(file, data, response) {
+			//var data = $.parseJSON(data);
+			var data=eval("("+data+")");
+			if(data.status ==0){
+				alert('上传出错，请稍后再试');
+				return false;
+			}
+			
+			if(data.status==1){           	
+				var html = '<div class="cl" style="margin-top: 5px;"></div>'
+				html += '<div id="attachment">'+'<span><img src="'+data.file+'"></span>' ;
+				html += '<a href="javascript:void(0)" onclick="delete_attachment(this);">删除</a>';
+				html += '<input type="hidden" name="thumb" value="'+data.file+'" /></div>';
+				$('#upload_file').after(html);
+			} else {
+				alert('上传出错，请稍后再试');
+				return false;
+			}
+		},
+		'onSelect' : function(file) {
+			var length = $('#attachment').length;
+			if(length > 0){
+				$('#upload_file').uploadify('cancel')
+				$('#upload_file').uploadify('stop');
+				alert('附件只允许上传一个');
+				return false;
+			}
+		}
+	});
+	 });
+	function delete_attachment(e){
+		var $this = $(e);
+		$this.parent('div').remove();
+	}
+</script> <script type="text/javascript">
+	$(function(){
+		$('#upload_gallery').uploadify({
+			'queueSizeLimit' : 10,
+			'swf'             : '__PUBLIC__/User/uploadify.swf',
+			'uploader'        : "{:U('Public/uploadAttach',array('session_id'=>session_id(),'type'=>'1'))}",
+			'fileObjName'     : $('#upload_gallery').attr('name'),
+			'buttonClass'     : 'upload-case',
+			'width'           : 150,
+			'height'          : 25,
+			'removeTimeout'   : 1,
+			'buttonText'      : '上传多图',
+			'fileTypeExts'    : '*.gif; *.jpg; *.png',
+			'onUploadSuccess' : function(file, data, response) {
+				//var data = $.parseJSON(data);
+				var data=eval("("+data+")");
+				if(data.status ==0){
+					alert('上传出错，请稍后再试');
+					return false;
+				}
+				if(data.status==1){           	
+					var html = '<div class="cl" style="margin-top: 5px;"></div>'
+					html += '<div id="attachment">'+'<span><img src="'+data.file+'"></span>' ;
+					html += '<a href="javascript:void(0)" onclick="delete_attachment(this);">删除</a>';
+					html += '<input type="hidden" name="gallery[]" value="'+data.file+'" /></span>';
+					$('#upload_gallery').after(html);
+				} else {
+					alert('上传出错，请稍后再试');
+					return false;
+				}
+			},
+			'onSelect' : function(file) {
+				var length = $('#attachment').length;
+				if(length > 0&&lengh<11){
+					$('#upload_gallery').uploadify('cancel')
+					$('#upload_gallery').uploadify('stop');
+					alert('附件只允许上传10个');
+					return false;
+				}
+			}
+		});
+	});
+</script> <script type="text/livescript">
+	$(function(){
+		$(".gallery").click(function(){
+			var id=$(this).attr('data-id');
+			$('#src_'+id).remove();
+			$(this).fadeIn(300); 	  
+		  });
+	  });
+</script> <script type="text/javascript" src="__JS__/selectTag/selectTag.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('.time').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii:ss',
+        language: "zh-CN",
+        minView: 2,
+        autoclose: true
+    });
+    showTab();
+});
+</script>

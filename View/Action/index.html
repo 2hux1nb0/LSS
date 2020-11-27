@@ -1,0 +1,51 @@
+<include file="Public/commoner"/>
+<block name="body">
+    <ol class="breadcrumb">
+        <li><a href="{:U('Index/index')}">首页</a></li>
+        <li>操作记录</li>
+    </ol>
+    <div class="content">
+        <div class="Config_nav">
+            <ul>
+                <li><a class="on" href="{:U('Action/index')}">操作记录</a></li>
+            </ul>
+        </div>
+        <form action="{:U('Action/del')}" name="myform" id="myform" method="post">
+            <div class="List">
+                <div class="table-list">
+                    <ul>
+                        <li class="ID">ID</li>
+                        <li class="Name">操作用户</li>
+                        <li class="Property">执行表</li>
+                        <li class="S_Order">时间</li>
+                        <li class="Status">状态</li>
+                        <li class="Oper">管理操作</li>
+                    </ul>
+                </div>
+                <foreach name="list" item="vo" key="k" >
+                    <div class="ProList">
+                        <ul>
+                            <li class="ID">{$vo.id}</li>
+                            <li class="Name">{:get_nickname($vo['user_id'])}</li>
+                            <li class="Property">{$vo.model}</li>
+                            <li class="S_Order">{$vo.create_time|date="Y-m-d",###}</li>
+                            <li class="Status">{$vo[status] == 1?'成功':'<font color=red>失败</font>'}</li>
+                            <li class="Oper">
+                                <div>
+                                    <a href="{:U('Action/view',array('id'=>$vo['id']))}">查看</a>
+                                    <span>|</span>
+                                    <a href="{:U('Action/delete',array('id'=>$vo['id']))}">删除</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </foreach>
+                <div class="cl" style="margin-top: 15px;"></div>
+                <div class="Order_submit">
+                    <input class="btn btn-primary btn6 mr10" type="submit" value="清空" /><div class="tp_pages">{$page}</div>
+                </div>
+            </div>
+        </form>       
+    	<include file="Public:copyright"/>
+    </div>
+</black>

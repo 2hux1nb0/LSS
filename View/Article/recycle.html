@@ -1,0 +1,75 @@
+<include file="Public/commoner" />
+<block name="body">
+<ol class="breadcrumb">
+	<li><a href="{:U('Index/index')}">首页</a></li>
+	<li><a href="{:U('Article/index')}">员工管理</a></li>
+	<li>回收站</li>
+</ol>
+<div class="content">
+	<div class="Config_nav">
+		<ul>
+			<li><a href="{:U('Article/index')}">员工管理</a></li>
+			<li><a href="{:U('Article/add')}">添加员工</a></li>
+			<!-- <li><a href="{:U('Articlecomment/index')}">文章评论</a></li> -->
+			<li><a class="on" href="{:U('Article/recycle')}">回收站</a></li>
+		</ul>
+	</div>
+	<form action="{:U('Article/clear')}" name="myform" id="myform"
+		method="post">
+		<div class="List">
+			<div class="table-list">
+				<ul>
+					<li class="ID">ID</li>
+					<li class="ID">员工姓名</li>
+					<li class="ID">性别</li>
+					<li class="ID">手机号</li>
+					<li class="ID">职位</li>
+					<li class="ID">上衣尺码</li>
+					<li class="ID">裤子尺码</li>
+					<li class="ID">鞋号</li>
+					<li class="ID">部门ID</li>
+                        <li class="ID">部门名称</li>
+					<li class="Property">入职时间</li>
+					<!-- <li class="S_Order">排序</li> -->
+					<li class="Status">状态</li>
+					<li class="Oper">管理操作</li>
+				</ul>
+			</div>
+			<foreach name="article_list" item="vo" key="k">
+			<div class="ProList">
+				<ul>
+					<li class="ID">{$vo.id}</li>
+					<li class="ID">{$vo.title}</li>
+					<li class="ID">{$vo.sex}</li>
+					<li class="ID">{$vo.phone}</li>
+					<li class="ID">{$vo.zhiwei}</li>
+					<li class="ID">{$vo.sy_size}</li>
+					<li class="ID">{$vo.kz_size}</li>
+					<li class="ID">{$vo.shoes_size}</li>
+					<li class="ID">{$vo.catid}</li>
+                    <li class="ID">{$vo.catname}</li>
+					<li class="Property">{$vo.inputtime|date="Y-m-d",###}</li>
+					<li class="S_Order"><font color=red>{$vo.updatetime|date="Y-m-d",###}</font></li>
+					<li class="Status">{$vo[status]==1?'正常':'<font color=red>已删除</font>'}
+					</li>
+					<li class="Oper">
+						<div>
+							<a
+								href="{:U('Article/status',array('id'=>$vo['id'],'status'=>$vo['status']))}">还原</a>
+							<span>|</span> <a
+								href="{:U('Article/delete',array('id'=>$vo['id']))}">永久删除</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+			</foreach>
+			<div class="cl" style="margin-top: 15px;"></div>
+			<div class="Order_submit">
+				<input class="btn btn-primary btn6 mr10" type="submit" value="清空" />
+				<div class="tp_pages">{$page}</div>
+			</div>
+		</div>
+	</form>
+	<include file="Public:copyright" />
+</div>
+</black>

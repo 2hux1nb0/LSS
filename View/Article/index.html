@@ -1,0 +1,89 @@
+<include file="Public/commoner"/>
+<block name="body">
+    <ol class="breadcrumb">
+        <li><a href="{:U('Index/index')}">首页</a></li>
+        <li>员工管理</li>
+    </ol>
+    <div class="content">
+        <div class="Config_nav">
+            <ul>
+                <li><a class="on" href="{:U('Article/index')}">员工管理</a></li>
+                <li><a href="{:U('Article/add')}">添加员工</a></li>
+                <!-- <li><a href="{:U('Articlecomment/index')}">员工评论</a></li> -->
+                <li><a href="{:U('Article/recycle')}">回收站</a></li>
+            </ul>
+        </div>
+        <div class="Search">
+            <form action="" method="get">
+                <div class="JianSuo">
+                    <!-- <select name="catid">
+                        <option>选择部门</option>
+                        <foreach name="cate_list" item="vo" key="k" >
+                        <option value="{$vo.catid}">{:str_repeat("└─",$vo['level'])}{$vo.catname}</option>
+                        </foreach>
+                    </select> -->
+                </div>
+                <div class="keyword"><input class="common-text input-text" size="16" placeholder="员工姓名" name="q" value=""  type="text"></div>
+                <div class="btn1"><input class="btn btn-primary btn6 mr10" value="查询" type="submit" /></div>
+            </form>
+        </div>
+        <form action="{:U('Article/sortBatch')}" name="myform" id="myform" method="post">
+            <div class="List">
+                <div class="table-list">
+                    <ul>
+                        <li class="ID">ID</li>
+                        <li class="ID">员工姓名</li>
+                        <li class="ID">性别</li>
+                        <li class="ID">手机号</li>
+                        <li class="ID">职位</li>
+                        <li class="ID">上衣尺码</li>
+                        <li class="ID">裤子尺码</li>
+                        <li class="ID">鞋号</li>
+                        <li class="ID">部门ID</li>
+                        <li class="Property">部门名称</li>
+                        <li class="Property">入职时间</li>
+                        <!-- <li class="ID">简介</li> -->
+                        <!-- <li class="S_Order">排序</li> -->
+                        <li class="Status">状态</li>
+                        <li class="Oper">管理操作</li>
+                    </ul>
+                </div>
+                <foreach name="article_list" item="vo" key="k" >
+                    <div class="ProList">
+                        <ul>
+                            <li class="ID">{$vo.id}</li>
+                            <li class="ID">{$vo.title}<!-- <a href="{:U('Article/edit',array('id'=>$vo['id']))}">{$vo.title}</a> --></li>
+                            <li class="ID">{$vo.sex}</li>
+                            <li class="ID">{$vo.phone}</li>
+                            <li class="ID">{$vo.zhiwei}</li>
+                            <li class="ID">{$vo.sy_size}</li>
+                            <li class="ID">{$vo.kz_size}</li>
+                            <li class="ID">{$vo.shoes_size}</li>
+                            <li class="ID">{$vo.catid}</li>
+                            <li class="Property">{$vo.catname}</li>
+                            <li class="Property">{$vo.inputtime}</li>
+                            <!-- <li class="ID">{$vo.info}</li> -->
+                            <!-- <li class="S_Order"><input type="text" class="sInput" name="sort[{$vo.id}]" value="{$vo.sort}" /></li> -->
+                            <li class="Status">{$vo[status]==1?'正常':'<font color=red>已删除</font>'}</li>
+                            <li class="Oper">
+                                <div>
+                                    <!-- <a href="{:U('Articlecomment/index',array('articleid'=>$vo['id']))}">评论</a>
+                                    <span>|</span> -->
+                                    <a href="{:U('Article/edit',array('id'=>$vo['id']))}">编辑</a>
+                                    <span>|</span>
+                                    <a href="{:U('Article/status',array('id'=>$vo['id'],'status'=>$vo['status']))}">删除</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </foreach>
+                <div class="cl" style="margin-top: 15px;"></div>
+                <div class="Order_submit">
+                    <input class="btn btn-primary btn6 mr10" type="submit" value="排序" />
+                    <div class="tp_pages">{$page}</div>
+                </div>
+            </div>
+        </form>           
+    	<include file="Public:copyright"/>
+    </div>
+</black>

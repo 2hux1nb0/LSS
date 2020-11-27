@@ -1,0 +1,60 @@
+<include file="Public/commoner"/>
+<block name="body">
+    <ol class="breadcrumb">
+        <li><a href="{:U('Index/index')}">首页</a></li>
+        <li><a href="{:U('Article/index')}">文章管理</a></li>
+        <li>文章评论</li>
+    </ol>
+    <div class="content">
+        <div class="Config_nav">
+            <ul>
+                <li><a href="{:U('Article/index')}">文章管理</a></li>
+                <li><a href="{:U('Article/add')}">添加文章</a></li>
+                <li><a class="on" href="{:U('Articlecomment/index')}">文章评论</a></li>
+                <li><a href="{:U('Article/recycle')}">回收站</a></li>
+            </ul>
+        </div>
+        <form action="{:U('Articlecomment/update')}" method="post"  id="form" enctype="multipart/form-data" >
+            <input type="hidden" name="id" value="{$detail.id}" />
+            <!--<input type="hidden" name="email" value="{$detail.email}">
+            <input type="hidden" name="title" value="{$detail.title}">-->
+            <div class="SiteContent">
+                <ul>
+                    <li class="Name">文章标题</li>
+                    <li class="input">{$detail.articletitle}</li>
+                </ul>
+                <ul>
+                    <li class="Name">评论标题</li>
+                    <li class="input">{$detail.commenttitle}</li>
+                </ul>
+                <ul>
+                    <li class="Name">评论内容</li>
+                    <li class="input">{$detail.content}</li>
+                </ul>
+                <ul>
+                    <li class="Name">评论指数</li>
+                    <li class="input">{$detail.info}</li>
+                </ul>
+                <ul>
+                    <li class="Name">回复内容</li>
+                    <li class="input">
+                        <textarea name="replycontent" class="common-textarea textarea" cols="30" style="width: 50%;" rows="5">{$detail.replycontent}</textarea>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="Name">审核</li>
+                    <li class="input">
+                        <div class="radio"><span><input type="radio" name="status" value="1" <if condition="$detail['status'] eq 1">checked="checked"</if>></span><label for="status1">已通过</label></div>
+                        <div class="radio"><span><input type="radio" name="status" value="0" <if condition="$detail['status'] eq 0">checked="checked"</if>></span><label for="status2">未通过</label></div> 
+                    </li>
+                </ul>
+                <div class="cl" style="height: 10px;"></div>
+                <div class="btn">
+                    <input class="btn btn-primary btn6 mr10" value="提交" style="margin-right: 10px;" type="submit">
+                    <input class="btn btn6" onClick="history.go(-1)" value="返回" type="button">
+                </div>
+            </div>
+        </form>
+        <include file="Public:copyright"/>
+    </div>
+</black>

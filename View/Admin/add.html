@@ -1,0 +1,53 @@
+<include file="Public/commoner"/>
+<block name="body">
+    <ol class="breadcrumb">
+        <li><a href="{:U('Index/index')}">首页</a></li>
+        <li><a href="{:U('Admin/index')}">管理员列表</a></li>
+        <li>管理员添加</li>
+    </ol>
+    <div class="content">
+        <div class="Config_nav">
+            <ul>
+                <li><a href="{:U('Admin/index')}">管理员列表</a></li>
+                <li><a class="on" href="{:U('Admin/add')}">管理员添加</a></li>
+            </ul>
+        </div>
+        <form action="{:U('admin/insert')}" method="post" id="form"  enctype="multipart/form-data">     
+            <div class="SiteContent">
+                <ul>
+                    <li class="Name">用户名</li>
+                    <li class="input"><input type="text" name="username" class="common-text input-text" size="30" value="" /><span>*注：用户名一旦注册后，将不可修改</span></li>
+                </ul>
+                <ul>
+                    <li class="Name">密码</li>
+                    <li class="input"><input type="password" name="password" class="common-text input-text" size="30" value="" /></li>
+                </ul>
+                <ul>
+                    <li class="Name">重复密码</li>
+                    <li class="input"><input type="password" name="password_n" class="common-text input-text" size="30" value="" /></li>
+                </ul>
+                <ul>
+                    <li class="Name">昵称</li>
+                    <li class="input"><input type="text" name="nickname" class="common-text input-text" size="30" value="" /></li>
+                </ul>
+                <ul>
+                    <li class="Name">邮箱</li>
+                    <li class="input"><input type="text" name="email" class="common-text input-text" size="30" value="" /></li>
+                </ul>
+                <ul>
+                    <li class="Name">用户组</li>
+                    <li class="input">
+                    	<foreach name="list" item="vo" key="k" >
+                            <div class="radio"><span><input type="radio" name="authority" value="{$vo.id}" <if condition="($k+1) eq 1">checked="checked"</if>></span><label for="status1">{$vo.title}</label></div>
+						 </foreach>
+                    </li>
+                </ul>
+                <div class="cl" style="height: 10px;"></div>
+                <div class="btn">
+                    <input class="btn btn-primary btn6 mr10" name="submit" value="注册" style="margin-right: 10px;" type="submit"><input class="btn btn6" onClick="history.go(-1)" value="返回" type="button">
+                </div>
+            </div>
+        </form>           
+        <include file="Public:copyright"/>
+    </div>
+</block>
